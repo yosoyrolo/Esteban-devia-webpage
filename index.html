@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://www.gstatic.com/firebasejs/5.5.3/firebase.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Esteban Devia</title>
+
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300" rel="stylesheet">
+
+	<style type="text/css">
+
+		body, html{
+			margin: 0;
+			padding: 0;
+			border: 0;
+			overflow: auto;
+			font-family: 'Montserrat', sans-serif;
+			color: white;
+			text-align: center;
+			box-sizing: border-box;
+			overflow-x: hidden;
+
+		}
+
+		h1{
+			padding: 30px;
+			font-size: 18pt;
+			margin: 0;
+		}	
+
+		h2{
+			padding: 10px;
+			font-size: 12pt;
+			margin: 0;
+		}	
+
+		h3{
+			padding: 10px;
+			font-size: 32pt;
+			margin: 0;
+		}
+
+		#Home{
+			position: relative;
+			height: 70vh;
+			overflow: hidden;
+			box-sizing: border-box;
+		}
+
+		#myVideo {
+  position: absolute;
+  top: 50%; 
+  left: 50%;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  min-width: 100%; 
+  min-height: 100%; 
+  width: auto; 
+  height: auto;
+  z-index: -1000; 
+  overflow: hidden;
+		}
+
+		#top{
+			z-index: 1;
+			top: 0;
+			position: absolute;
+			text-align: left;
+		}
+
+		.buttonTop {
+			text-decoration: none;
+    		display: inline-block;
+			margin: 2vw;
+			font-size: 12pt;
+			padding-top: 8px;
+			padding-bottom: 8px;
+			padding-left: 4vw;
+			padding-right: 4vw;
+		    background: none;
+		    color: white; 
+		    border: 2px solid rgba(255, 255, 255, .0);
+		    border-radius: 24px;
+		    transition: 0.3s;
+		}
+
+		.buttonTop:hover {
+		    background: none;
+		    color: white;
+		    border: 2px solid white;
+		}
+
+		#logo{
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0,0,0,0.3);
+			background-image: url("assets/EstebanDeviaLogo.png");
+			background-size: contain;
+			background-repeat: no-repeat;
+			background-position: center;
+		}
+		#Home{
+			text-align: center;
+		}
+
+		#Home h1{
+			left:50%;
+			color: white;
+			z-index: 2;
+			position: absolute;
+			bottom: 0;
+
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+		}
+
+
+		#Gallery{
+			background-color: white;
+			color: black;
+			overflow: hidden;
+			width: 100vw;
+			box-sizing: border-box;
+		}
+
+		#PicsElement{
+			background-color: white;
+			display: inline-grid;
+			grid-template-columns: 20vw 20vw 20vw 20vw 20vw;
+			overflow: hidden;
+			width: 100%;
+			box-sizing: border-box;
+			grid-column-gap: 0;
+
+		}
+
+		.photo{
+			box-sizing: border-box;
+			border: 2px solid rgba(255, 255, 255, 1);
+			width: 20vw;
+			height: 20vw;
+			background-color: #dddddd;
+			margin: 0;
+			padding: 0;
+			transition: 0.3s;
+			border-radius: 0;
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-position: center;
+
+		}
+
+		.photo:hover{
+			background-color: rgba(0,0,0,0.5);
+			border-radius: 5%;
+			opacity: 0.5;
+		}
+
+		#Resume{
+			background-color: #2A3052;
+			text-align: center;
+		}
+
+		#MyPhoto{
+			position: relative;
+			width: 100%;
+			height: 45vh;
+			background-image: url("assets/EstebanDeviaPerfilred.png");
+			background-size: contain;
+			background-repeat: no-repeat;
+			background-position: center;
+		}
+
+		.TexBox{
+			background-color: #3A4370;
+			padding: 30px;
+			border-radius: 40px;
+			margin-top: 3%;
+			margin-right: 10%;
+			margin-left: 10%;
+			font-size: 15pt;
+			line-height: 35px;
+			box-sizing: border-box;
+			word-wrap: break-word;
+		}
+
+		#ExperienceStudies{
+			background-color: #2A3052;
+			width: 100%
+		}
+
+		#containerLists{
+			box-sizing: border-box;
+			display: inline-grid;
+			grid-template-columns: auto auto;
+			width: 80%
+		}
+
+		.list{
+			box-sizing: border-box;
+			margin: 0;
+			padding: 40px;
+			line-height: 35px;
+
+		}
+
+		#Software{
+			height: 70vh;
+			background-color: #232943;
+			grid-template-columns: auto auto;
+		}
+
+		#SoftwareContainer{
+			box-sizing: border-box;
+			display: inline-grid;
+			grid-template-columns: auto auto auto;
+			width: 60%;
+			grid-column-gap: 10vw;
+		}
+
+		.SoftwareLogo{
+			height: 20vh;
+			background-size: contain;
+			background-repeat: no-repeat;
+			background-position: center;
+
+		}
+
+		#Contact{
+			overflow: hidden;
+			background-color: #232943;
+			position: relative;
+			box-sizing: border-box;
+		}
+
+		#footer{
+			position: absolute;
+			background-color: #000000;
+			opacity: 0.5;
+			color: white;
+			margin: 0;
+			padding: 15px;
+			bottom: 0;
+			width: 100%;
+		}
+
+		#ContactContainer{
+
+			margin-bottom: 100px;
+			box-sizing: border-box;
+
+		}
+		#ContactContainer h1{
+
+			padding: 10px;
+		}
+
+		#ContainerFull{
+			position: fixed;
+			opacity: 1;
+			top: 0;
+			background-color: black;
+			width: 100vw;
+			height: 100vh;
+			z-index: 10;
+		}
+
+		.PhotoBig{
+			opacity: 1;
+			top: 0;
+			position: absolute;
+			width: 100vw;
+			height: 100vh;
+			background-size: contain;
+			background-repeat: no-repeat;
+			background-position: center;
+		}
+
+		.GoButton{
+			color: white;
+			z-index: 100;
+			position: fixed;
+			background-color: #4CAF50; /* Green */
+			padding: 15px 32px;
+    		text-align: center;
+    		text-decoration: none;
+    		left: 0;
+    		top: 0;
+    		margin: 10px 10px;
+    		border-radius: 32px;
+    		transition: 0.3s;
+
+
+		}
+
+		.GoButton:hover{
+			background-color: #6CCF70; /* Green */
+			color: black
+		}
+
+		.DescriptionDiv{
+			position: fixed;
+			bottom: 0;
+			width: 100%;
+			color: white;
+			padding: 32px;
+			text-align: justify;
+			background-color: rgba(0,0,0,0.5);
+			word-wrap: break-word;
+			box-sizing: border-box;
+		}
+
+		@media only screen and (max-width: 1000px) {
+			#PicsElement{
+
+				grid-template-columns: 33vw 33vw 33vw;
+
+			}
+
+			.photo{
+				height: 33vw;
+				width:  33vw;
+			}
+
+
+			#Software{
+				height: auto;
+			}
+
+			#SoftwareContainer{
+				grid-template-columns: auto auto;
+			}
+
+			#containerLists{
+				grid-template-columns: auto;
+			}
+
+		}
+
+		@media only screen and (max-width: 600px) {
+
+			#PicsElement{
+
+				grid-template-columns: 50vw 50vw;
+
+			}
+
+			.photo{
+				height: 50vw;
+				width:  50vw;
+			}
+
+
+			#Software{
+				height: auto;
+			}
+
+			#SoftwareContainer{
+				grid-template-columns: auto;
+			}
+
+			.TexBox{
+				font-size: 10pt;
+			}
+
+		}
+			
+
+</style>
+</head>
+<body>
+
+	<div id=Home>
+
+
+		<video preload autoplay muted loop id="myVideo">
+		  <source src="assets/VideoBackground.mp4" type="video/mp4">
+		  <source src="assets/VideoBackground.webm" type="video/webm">
+		  Your browser does not support HTML5 video.
+		</video>
+
+		<div id="logo"></div>
+
+		<h1>3D Artist</h1>
+
+
+		<div id=top>
+			<a href="#Gallery" class="buttonTop">Gallery</a>
+			<a href="#Resume" class="buttonTop">Resume</a>
+			<a href="#Contact" class="buttonTop">Contact</a>
+		</div>
+
+		
+	</div>
+
+
+	<div id="Gallery">
+
+	<h1>Gallery</h1>
+
+		<div id="PicsElement"></div>
+		
+	</div>
+
+	<div id="Resume">
+		<h1>Resume</h1>
+
+		<div id="MyPhoto"></div>
+		<h2>My name is</h2>
+		<h3><b>Esteban Devia Bedoya</b></h3>
+		<div class="TexBox">I'm a 3D artist, with a background in web development. I love art and technology, I always use both to express my ideas. I'm always learning new skills and updating my abilities in order to
+		create the best quality content.</div>
+
+	</div>
+
+	<div id="ExperienceStudies">
+
+		<div id="containerLists">
+
+			<div class="list">
+				<h1>Studies</h1>
+
+				Full Sail University<br>
+				<b>Bachelor of Computer Animation</b><br><br>
+
+				Kaplan International<br>
+				<b>English Proficient</b><br><br>
+
+				Nuevo Gimnasio School<br>
+				<b>Bachillerato</b><br><br>
+			</div>
+
+			<div class="list">
+				<h1>Experience</h1>
+
+				Full Sail University<br>
+				<b>Character Modeling Intership</b><br><br>
+
+				Cofrem<br>
+				<b>Game Develop Freelancer</b><br><br>
+
+				Universidad de los Andes</b><br>
+				<b>Newspaper Designer</b><br><br>
+			</div>
+
+		</div>
+
+	</div>
+
+	<div id="Software">
+
+		<h1>Software</h1>
+
+		<div id="SoftwareContainer">
+
+			<div class="SoftwareLogo" style="background-image: url('assets/Logo_Maya.png')"></div>
+
+			<div class="SoftwareLogo" style="background-image: url('assets/Logo_Blender.png')"></div>
+
+			<div class="SoftwareLogo" style="background-image: url('assets/Logo_Zbrush.png')"></div>
+
+			<div class="SoftwareLogo" style="background-image: url('assets/Logo_Photoshop.png')"></div>
+
+			<div class="SoftwareLogo" style="background-image: url('assets/Logo_ThreeJs.png')"></div>
+
+			<div class="SoftwareLogo" style="background-image: url('assets/Logo_Nuke.png')"></div>
+
+			<div class="SoftwareLogo" style="background-image: url('assets/Logo_Painter.png')"></div>
+
+			<div class="SoftwareLogo" style="background-image: url('assets/Logo_GameMaker.png')"></div>
+			
+
+		</div>
+		
+
+	</div>
+
+	<div id="Contact">
+
+
+		<div id="footer">EstebanDevia.com - 2018</div>
+
+		<div class="TexBox" id="ContactContainer">
+
+			<h1>Contact</h1>
+
+			E-mail: <b>Esteban.Devia.3D@gmail.com</b>
+
+
+		</div>
+		
+	</div>
+
+</body>
+
+
+
+<script type="text/javascript">
+
+function addImages(obj,ID){
+
+	var photo = document.createElement('div');
+	photo.className = 'photo';
+	photo.PicId = ID
+	photo.info = obj;
+	photo.onclick = function(){
+		createPhotoBig(this.info,this.PicId);
+	};
+	document.getElementById('PicsElement').appendChild(photo);
+	photo.style.backgroundImage = "url('"+obj.url+"')";
+
+};
+
+
+	document.addEventListener("keydown", function(event) {
+
+		  	if(event.which==37){
+		  		var container = document.getElementById("ContainerFull");
+
+		  		container.left();
+		  		
+		  	}
+
+		  	if(event.which==39){
+
+		  		var container = document.getElementById("ContainerFull");
+
+		  		container.right();
+		  		
+		  	}
+
+		});
+
+
+function createPhotoBig(obj,id){
+
+	console.log("CreatePhotoBig")
+
+	var ContainerFull = document.createElement('div');
+	ContainerFull.id = "ContainerFull";
+	ContainerFull.PicId = id;
+	ContainerFull.right = function(){
+		this.PicId -= 1;
+
+		if (this.PicId<0){
+			this.PicId = (GalleryPictures.length)-1;
+		}
+
+		console.log(this.PicId)
+		this.photo.style.backgroundImage = "url('"+GalleryPictures[this.PicId].url+"')";
+		ContainerFull.Desc.innerHTML = GalleryPictures[ContainerFull.PicId].description;
+	}
+
+	ContainerFull.left = function(){
+		this.PicId += 1;
+
+		if (this.PicId>GalleryPictures.length-1){
+			this.PicId = 0;
+		}
+		console.log(this.PicId)
+		this.photo.style.backgroundImage = "url('"+GalleryPictures[this.PicId].url+"')";
+		ContainerFull.Desc.innerHTML = GalleryPictures[ContainerFull.PicId].description;
+	}
+
+	var PhotoBig = document.createElement('div');
+	PhotoBig.className = "PhotoBig";
+	PhotoBig.style.backgroundImage = "url('"+GalleryPictures[ContainerFull.PicId].url+"')";
+	ContainerFull.appendChild(PhotoBig);
+
+	ContainerFull.photo = PhotoBig;
+
+	var CloseButton = document.createElement('div');
+	CloseButton.className = "PhotoBig";
+	CloseButton.style.width = "64px";
+	CloseButton.style.height = "64px";
+	CloseButton.style.right = "16px";
+	CloseButton.style.backgroundImage = "url('assets/Plus_sign.png')";
+
+
+	var GoButton = document.createElement('a');
+	GoButton.className = "GoButton";
+	GoButton.innerHTML = "Go to post.";
+	GoButton.onmousedown = function(){window.open(GalleryPictures[ContainerFull.PicId].go, '_blank')};
+
+
+	var DescriptionDiv = document.createElement('div');
+	ContainerFull.Desc = DescriptionDiv;
+	DescriptionDiv.className = "DescriptionDiv";
+	DescriptionDiv.innerHTML = GalleryPictures[ContainerFull.PicId].description;
+
+	CloseButton.onclick = function(){
+		document.body.removeChild(ContainerFull);
+	}
+
+	ContainerFull.appendChild(GoButton);
+	ContainerFull.appendChild(CloseButton);
+	ContainerFull.appendChild(DescriptionDiv);
+
+		document.body.appendChild(ContainerFull);
+};
+
+
+
+</script>
+
+
+
+<script>
+
+
+window.addEventListener("load", init);
+
+var database;
+var Gallery;
+var GalleryPictures = [];
+
+function init(){
+
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCtwtmbcJPEecRW6ar5IJuRISyK_GS-6kE",
+    authDomain: "estebandevia-305f8.firebaseapp.com",
+    databaseURL: "https://estebandevia-305f8.firebaseio.com",
+    projectId: "estebandevia-305f8",
+    storageBucket: "estebandevia-305f8.appspot.com",
+    messagingSenderId: "453110454997"
+  };
+  firebase.initializeApp(config);
+
+	  database = firebase.database();
+
+	  Gallery = database.ref("Gallery");
+
+	  Gallery.on('value',function(data){
+
+
+
+	var keys = Object.keys(data.val());
+
+	var DataToArray = [];
+
+	            for (var i = keys.length - 1; i >= 0; i--) {
+	              DataToArray.push(data.val()[keys[i]]);
+	            }
+
+	            GalleryPictures = DataToArray.reverse();
+
+
+
+	            for (var i = GalleryPictures.length - 1; i >= 0; i--) {
+					addImages(GalleryPictures[i],i);
+				}
+
+
+	        },function(err){console.error(err)});
+
+}
+
+
+
+</script>
+
+
+</html>
